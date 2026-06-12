@@ -4,8 +4,12 @@ const egos = [
     name: "KRODHA",
     meaning: "Beautiful rage",
     role: "For the moments you need to burn clean.",
-    product: "Chilli cacao crunch",
+    product: "Chilli Cacao Crunch",
+    price: 349,
+    pack: "Box of 6 crisp wafers",
+    badge: "Bestseller",
     ingredients: ["ashwagandha", "dark cacao", "red chilli", "magnesium"],
+    benefits: ["Spicy dark cacao", "Low sugar", "5g fiber", "No artificial colors"],
     phrase: "Controlled fury. No apology.",
     visual: "black chrome, torn heat, molten type",
     palette: ["#ff1d18", "#090909", "#d8d8d8", "#ff7b00"],
@@ -17,8 +21,12 @@ const egos = [
     name: "MADA",
     meaning: "Main character",
     role: "For walking in like the room asked for you.",
-    product: "Saffron guava vanilla",
+    product: "Saffron Guava Vanilla",
+    price: 389,
+    pack: "Box of 6 crisp wafers",
+    badge: "New drop",
     ingredients: ["saffron", "guava", "b12", "citrus peel"],
+    benefits: ["Saffron citrus glaze", "Low sugar", "5g fiber", "Vitamin B12"],
     phrase: "Glossy ego. Full volume.",
     visual: "hot pink, liquid gold, warped mirror fruit",
     palette: ["#ff2bbd", "#0b050b", "#f7c845", "#ffffff"],
@@ -30,8 +38,12 @@ const egos = [
     name: "NIRVANA",
     meaning: "Soft disappearance",
     role: "For vanishing from the noise without leaving the room.",
-    product: "Vanilla cardamom blueberry",
+    product: "Vanilla Cardamom Blueberry",
+    price: 369,
+    pack: "Box of 6 crisp wafers",
+    badge: "Night snack",
     ingredients: ["cardamom", "chamomile", "blueberry", "l-theanine"],
+    benefits: ["Soft vanilla snap", "Low sugar", "5g fiber", "Made for wind-down"],
     phrase: "Float mode. Signal muted.",
     visual: "frosted glass, mist, icy silence",
     palette: ["#dff9ff", "#0d1e35", "#88d9ff", "#ffffff"],
@@ -43,8 +55,12 @@ const egos = [
     name: "BHAYA",
     meaning: "Delicious fear",
     role: "For the night-screen thrill and the sour little dare.",
-    product: "Tamarind lime shock",
+    product: "Tamarind Lime Shock",
+    price: 349,
+    pack: "Box of 6 sour bites",
+    badge: "Sour mode",
     ingredients: ["tamarind", "lime", "green mango", "electrolytes"],
+    benefits: ["Electric sour", "Low sugar", "5g fiber", "Gaming desk approved"],
     phrase: "Scare yourself awake.",
     visual: "toxic green, ultraviolet, glitch warnings",
     palette: ["#8cff00", "#050706", "#7b2cff", "#eaff00"],
@@ -56,8 +72,12 @@ const egos = [
     name: "SHRINGAR",
     meaning: "Edible desire",
     role: "For wanting, being wanted, and pretending it was accidental.",
-    product: "Rose cocoa berry",
+    product: "Rose Cocoa Berry",
+    price: 399,
+    pack: "Box of 6 chocolate wafers",
+    badge: "After dark",
     ingredients: ["rose", "cocoa", "strawberry", "silver leaf"],
+    benefits: ["Rose cocoa shell", "Low sugar", "5g fiber", "Date-night coded"],
     phrase: "Desire with teeth.",
     visual: "plum velvet, lipstick chrome, perfume danger",
     palette: ["#561034", "#f03c73", "#c6c6d0", "#1a0612"],
@@ -69,8 +89,12 @@ const egos = [
     name: "VEERA",
     meaning: "Hero mode",
     role: "For the pitch, the exam, the first rep, the last lap.",
-    product: "Masala cacao charge",
+    product: "Masala Cacao Charge",
+    price: 369,
+    pack: "Box of 6 crisp wafers",
+    badge: "Focus pick",
     ingredients: ["cacao", "brahmi", "sea salt", "saffron"],
+    benefits: ["Salted masala cacao", "Low sugar", "5g fiber", "Desk-to-gym energy"],
     phrase: "Enter like a victory.",
     visual: "cobalt, saffron, sharp steel geometry",
     palette: ["#0647ff", "#ff8a00", "#e8edf6", "#07122e"],
@@ -82,8 +106,12 @@ const egos = [
     name: "HASYA",
     meaning: "Chaos giggle",
     role: "For making the group chat louder.",
-    product: "Mango popping candy",
+    product: "Mango Popping Candy",
+    price: 329,
+    pack: "Box of 6 candy wafers",
+    badge: "Party pack",
     ingredients: ["mango", "popping candy", "banana", "jaggery"],
+    benefits: ["Mango pop crackle", "Low sugar", "5g fiber", "Shareable chaos"],
     phrase: "Unhinge the snack break.",
     visual: "stickers, candy noise, cartoon impact",
     palette: ["#ffe500", "#1da7ff", "#ff3b30", "#111111"],
@@ -95,8 +123,12 @@ const egos = [
     name: "KARUNA",
     meaning: "Soft armor",
     role: "For the day that needs a gentler ending.",
-    product: "Coconut jaggery almond",
+    product: "Coconut Jaggery Almond",
+    price: 349,
+    pack: "Box of 6 comfort wafers",
+    badge: "Soft reset",
     ingredients: ["coconut", "jaggery", "almond", "shatavari"],
+    benefits: ["Coconut jaggery melt", "Low sugar", "5g fiber", "Comfort without crash"],
     phrase: "Hold yourself properly.",
     visual: "quilted lilac, cream, handwritten softness",
     palette: ["#c9a7ff", "#fff0d8", "#ff7f6e", "#352047"],
@@ -106,14 +138,38 @@ const egos = [
 ];
 
 const app = document.querySelector("#app");
+let cart = JSON.parse(localStorage.getItem("rasa-cart") || "[]");
+let cartOpen = false;
+
+function money(value) {
+  return `₹${value}`;
+}
+
+function saveCart() {
+  localStorage.setItem("rasa-cart", JSON.stringify(cart));
+  updateCartButton();
+}
+
+function cartCount() {
+  return cart.reduce((sum, item) => sum + item.qty, 0);
+}
+
+function cartTotal() {
+  return cart.reduce((sum, item) => sum + item.qty * item.price, 0);
+}
+
+function updateCartButton() {
+  const button = document.querySelector(".cart-button");
+  if (button) button.textContent = `Bag (${cartCount()})`;
+}
 
 function paletteDots(colors) {
   return colors.map((color) => `<span style="--swatch:${color}"></span>`).join("");
 }
 
-function packMarkup(ego) {
+function packMarkup(ego, extraClass = "") {
   return `
-    <div class="pack-shell ${ego.mood}" aria-label="${ego.name} pack mockup">
+    <div class="pack-shell ${ego.mood} ${extraClass}" aria-label="${ego.name} pack mockup">
       <div class="pack-topline">RASA</div>
       <div class="pack-sigil">${ego.name.slice(0, 1)}</div>
       <div class="pack-name">${ego.name}</div>
@@ -124,63 +180,111 @@ function packMarkup(ego) {
   `;
 }
 
-function egoCard(ego) {
+function productCard(ego) {
   return `
-    <a class="ego-tile ${ego.mood}" href="#${ego.id}" style="--a:${ego.palette[0]};--b:${ego.palette[1]};--c:${ego.palette[2]}">
-      <span>${ego.name}</span>
-      <small>${ego.meaning}</small>
-    </a>
+    <article class="product-card ${ego.mood}" style="--a:${ego.palette[0]};--b:${ego.palette[1]};--c:${ego.palette[2]};--d:${ego.palette[3]}">
+      <a class="product-art" href="#${ego.id}" aria-label="View ${ego.name}">
+        ${packMarkup(ego, "mini-pack")}
+      </a>
+      <div class="product-info">
+        <div class="product-meta">
+          <span>${ego.badge}</span>
+          <strong>${money(ego.price)}</strong>
+        </div>
+        <h3>${ego.name}</h3>
+        <p>${ego.meaning} · ${ego.product}</p>
+        <div class="product-actions">
+          <button data-add="${ego.id}">Add to bag</button>
+          <a href="#${ego.id}">Details</a>
+        </div>
+      </div>
+    </article>
+  `;
+}
+
+function heroStack() {
+  return `
+    <div class="hero-pack-stack">
+      ${packMarkup(egos[0])}
+      ${packMarkup(egos[1])}
+      ${packMarkup(egos[2])}
+    </div>
   `;
 }
 
 function homeView() {
   return `
-    <section class="home-hero">
+    <section class="shop-hero">
       <div class="hero-copy">
-        <p class="eyebrow">Ancient moods. Modern snack egos.</p>
-        <h1>Pick your feeling. Wear the ego.</h1>
+        <p class="eyebrow">Mood snacks for emotional main characters</p>
+        <h1>Snack into the state you want.</h1>
         <p class="hero-text">
-          RASA is a fictional mood snack universe. Every pack is an alter ego:
-          rage, glamour, silence, thrill, desire, courage, comedy, comfort.
+          Crisp mood wafers. Indian hero ingredients. Loud western packaging.
+          Pick a box. Pick an ego.
         </p>
+        <div class="hero-offer">
+          <span>Launch drop</span>
+          <strong>Build any 4 boxes and save 15%</strong>
+        </div>
         <div class="hero-actions">
-          <a class="primary-action" href="#krodha">Enter KRODHA</a>
-          <a class="secondary-action" href="#lineup">See all egos</a>
+          <a class="primary-action" href="#shop">Shop the drop</a>
+          <button class="secondary-action" data-add="bundle">Add starter kit</button>
         </div>
       </div>
       <div class="hero-visual">
-        <div class="orbit-word orbit-one">KRODHA</div>
-        <div class="orbit-word orbit-two">MADA</div>
-        <div class="orbit-word orbit-three">NIRVANA</div>
-        <div class="hero-pack-stack">
-          ${packMarkup(egos[0])}
-          ${packMarkup(egos[1])}
-          ${packMarkup(egos[2])}
+        <div class="price-burst">
+          <span>From</span>
+          <strong>₹329</strong>
+          <small>box of 6</small>
         </div>
+        <div class="orbit-word orbit-one">SHOP RAGE</div>
+        <div class="orbit-word orbit-two">BUY CALM</div>
+        <div class="orbit-word orbit-three">EAT EGO</div>
+        ${heroStack()}
       </div>
     </section>
 
-    <section id="lineup" class="lineup-section">
+    <section id="shop" class="shop-section">
       <div class="section-heading">
-        <p class="eyebrow">The drop list</p>
-        <h2>Eight snacks. Eight egos. One parent brand with no chill.</h2>
+        <p class="eyebrow">Shop by state</p>
+        <h2>Eight egos. Cart them like moods.</h2>
       </div>
-      <div class="ego-grid">
-        ${egos.map(egoCard).join("")}
+      <div class="product-grid">
+        ${egos.map(productCard).join("")}
       </div>
     </section>
 
-    <section class="mockup-section">
-      <div class="mockup-copy">
-        <p class="eyebrow">Packaging territory</p>
-        <h2>Streetwear drop, perfume counter, night-market snack shelf.</h2>
+    <section id="bundle" class="bundle-section">
+      <div class="bundle-copy">
+        <p class="eyebrow">Starter kit</p>
+        <h2>The first four boxes to launch with.</h2>
         <p>
-          The parent brand stays restrained. The packs misbehave. Each SKU owns
-          a visual language strong enough to become a collectible, a sticker,
-          a hoodie, a vending machine, or a limited edition collab.
+          KRODHA for heat, MADA for gloss, NIRVANA for wind-down, HASYA for
+          chaotic sharing. A tight D2C entry bundle with obvious use occasions.
         </p>
+        <button class="primary-action" data-add="bundle">Add starter kit · ₹1299</button>
       </div>
-      <img src="assets/rasa-ego-mockups.png" alt="RASA emotion snack packaging mockup board">
+      <div class="bundle-packs">
+        ${[egos[0], egos[1], egos[2], egos[6]].map((ego) => packMarkup(ego, "bundle-pack")).join("")}
+      </div>
+    </section>
+
+    <section class="proof-strip">
+      <div><strong>5g</strong><span>fiber per pack</span></div>
+      <div><strong>&lt;4g</strong><span>added sugar</span></div>
+      <div><strong>8</strong><span>collectible egos</span></div>
+      <div><strong>0</strong><span>boring beige wellness</span></div>
+    </section>
+
+    <section class="subscribe-section">
+      <div>
+        <p class="eyebrow">Subscribe and rotate</p>
+        <h2>Your monthly mood drawer.</h2>
+      </div>
+      <form class="email-capture">
+        <input type="email" placeholder="email for first drop access" aria-label="Email">
+        <button type="submit">Join waitlist</button>
+      </form>
     </section>
   `;
 }
@@ -189,7 +293,7 @@ function detailView(ego) {
   document.body.dataset.ego = ego.id;
   return `
     <section
-      class="ego-page ${ego.mood} ${ego.font}"
+      class="pdp-page ${ego.mood} ${ego.font}"
       style="--a:${ego.palette[0]};--b:${ego.palette[1]};--c:${ego.palette[2]};--d:${ego.palette[3]}"
     >
       <div class="ego-background" aria-hidden="true">
@@ -197,15 +301,33 @@ function detailView(ego) {
         <span>${ego.meaning}</span>
         <span>${ego.phrase}</span>
       </div>
-      <div class="ego-copy">
-        <a class="back-link" href="#home">Back to RASA</a>
-        <p class="eyebrow">${ego.meaning}</p>
+      <div class="pdp-gallery">
+        ${packMarkup(ego, "pdp-pack")}
+        <div class="pdp-thumbs">
+          <span style="--swatch:${ego.palette[0]}"></span>
+          <span style="--swatch:${ego.palette[1]}"></span>
+          <span style="--swatch:${ego.palette[2]}"></span>
+        </div>
+      </div>
+      <div class="pdp-buybox">
+        <a class="back-link" href="#shop">Back to shop</a>
+        <p class="eyebrow">${ego.badge}</p>
         <h1>${ego.name}</h1>
         <p class="ego-role">${ego.role}</p>
         <p class="ego-phrase">${ego.phrase}</p>
+        <div class="buy-row">
+          <div>
+            <span>${ego.pack}</span>
+            <strong>${money(ego.price)}</strong>
+          </div>
+          <button data-add="${ego.id}">Add to bag</button>
+        </div>
+        <div class="benefit-grid">
+          ${ego.benefits.map((item) => `<span>${item}</span>`).join("")}
+        </div>
         <div class="identity-strip">
           <div>
-            <span>Snack</span>
+            <span>Flavor</span>
             <strong>${ego.product}</strong>
           </div>
           <div>
@@ -216,27 +338,118 @@ function detailView(ego) {
         <div class="ingredient-list">
           ${ego.ingredients.map((item) => `<span>${item}</span>`).join("")}
         </div>
-        <div class="palette" aria-label="${ego.name} palette">
-          ${paletteDots(ego.palette)}
+        <div class="pdp-note">
+          <strong>No heavy wellness lecture.</strong>
+          <span>Just a crisp snack with a specific emotional costume.</span>
         </div>
       </div>
-      <div class="ego-stage">
-        ${packMarkup(ego)}
-      </div>
-      <div class="next-row">
-        ${egos.filter((item) => item.id !== ego.id).slice(0, 3).map(egoCard).join("")}
+      <section class="ego-mockup-panel">
+        <div>
+          <p class="eyebrow">Mockup world</p>
+          <h2>${ego.name} belongs to the full RASA drop.</h2>
+          <p>
+            Every ego gets its own shelf energy, but the collection still feels
+            like one strange, shoppable snack universe.
+          </p>
+        </div>
+        <img src="assets/rasa-ego-mockups.png" alt="RASA ego packaging mockup board">
+      </section>
+      <div class="related-row">
+        ${egos.filter((item) => item.id !== ego.id).slice(0, 3).map(productCard).join("")}
       </div>
     </section>
   `;
+}
+
+function cartDrawer() {
+  const items = cart
+    .map((item) => `
+      <div class="cart-item">
+        <span>${item.name}</span>
+        <small>${item.qty} × ${money(item.price)}</small>
+        <button data-remove="${item.id}" aria-label="Remove ${item.name}">Remove</button>
+      </div>
+    `)
+    .join("");
+
+  return `
+    <aside class="cart-drawer ${cartOpen ? "open" : ""}" aria-label="Shopping bag">
+      <div class="cart-head">
+        <strong>Your bag</strong>
+        <button data-cart-close>Close</button>
+      </div>
+      <div class="cart-items">
+        ${cart.length ? items : "<p>Your bag is emotionally empty.</p>"}
+      </div>
+      <div class="cart-total">
+        <span>Total</span>
+        <strong>${money(cartTotal())}</strong>
+      </div>
+      <button class="checkout-button">Checkout concept</button>
+    </aside>
+  `;
+}
+
+function addToCart(id) {
+  if (id === "bundle") {
+    const bundle = { id: "starter-kit", name: "Starter Kit", price: 1299 };
+    const existing = cart.find((item) => item.id === bundle.id);
+    if (existing) existing.qty += 1;
+    else cart.push({ ...bundle, qty: 1 });
+  } else {
+    const ego = egos.find((item) => item.id === id);
+    if (!ego) return;
+    const existing = cart.find((item) => item.id === ego.id);
+    if (existing) existing.qty += 1;
+    else cart.push({ id: ego.id, name: ego.name, price: ego.price, qty: 1 });
+  }
+  cartOpen = true;
+  saveCart();
+  render();
+}
+
+function removeFromCart(id) {
+  cart = cart
+    .map((item) => (item.id === id ? { ...item, qty: item.qty - 1 } : item))
+    .filter((item) => item.qty > 0);
+  saveCart();
+  render();
 }
 
 function render() {
   const id = window.location.hash.replace("#", "") || "home";
   const ego = egos.find((item) => item.id === id);
   document.body.dataset.ego = ego ? ego.id : "home";
-  app.innerHTML = ego ? detailView(ego) : homeView();
+  app.innerHTML = `${ego ? detailView(ego) : homeView()}${cartDrawer()}`;
+  updateCartButton();
   window.scrollTo({ top: 0, behavior: "instant" });
 }
+
+document.addEventListener("click", (event) => {
+  const add = event.target.closest("[data-add]");
+  const remove = event.target.closest("[data-remove]");
+  const open = event.target.closest("[data-cart-open]");
+  const close = event.target.closest("[data-cart-close]");
+
+  if (add) addToCart(add.dataset.add);
+  if (remove) removeFromCart(remove.dataset.remove);
+  if (open) {
+    cartOpen = true;
+    render();
+  }
+  if (close) {
+    cartOpen = false;
+    render();
+  }
+});
+
+document.addEventListener("submit", (event) => {
+  if (event.target.matches(".email-capture")) {
+    event.preventDefault();
+    event.target.classList.add("submitted");
+    event.target.innerHTML = "<strong>You're on the first drop list.</strong>";
+  }
+});
 
 window.addEventListener("hashchange", render);
 render();
