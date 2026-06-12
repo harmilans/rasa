@@ -131,6 +131,7 @@ a {
 .hero-visual,
 .lineup-section,
 .mockup-section,
+.home-mockups-section,
 .shop-section,
 .bundle-section,
 .proof-strip,
@@ -437,6 +438,44 @@ button.secondary-action {
   background:
     linear-gradient(180deg, #0a0908, #11100d 48%, #0a0908),
     repeating-linear-gradient(90deg, transparent 0 54px, rgba(255, 255, 255, 0.03) 54px 55px);
+}
+
+.home-mockups-section {
+  padding: clamp(42px, 6vw, 82px) clamp(16px, 3vw, 42px);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background:
+    radial-gradient(circle at 14% 18%, rgba(255, 29, 24, 0.22), transparent 26%),
+    radial-gradient(circle at 88% 12%, rgba(255, 43, 189, 0.2), transparent 24%),
+    linear-gradient(135deg, #0a0908, #17110f);
+}
+
+.home-mockup-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.home-mockup-grid article {
+  display: grid;
+  gap: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.06);
+  padding: 14px;
+}
+
+.home-mockup-grid span {
+  color: var(--c, #f7c845);
+  font-size: 0.78rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.home-mockup-grid img {
+  width: 100%;
+  display: block;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.34);
 }
 
 .section-heading {
@@ -1675,6 +1714,7 @@ body[data-ego="karuna"] .site-header { background: rgba(34, 21, 49, 0.84); }
   .home-hero,
   .shop-hero,
   .mockup-section,
+  .home-mockup-grid,
   .ego-page,
   .pdp-page,
   .ego-mockup-panel,
@@ -1840,43 +1880,3 @@ body[data-ego="karuna"] .site-header { background: rgba(34, 21, 49, 0.84); }
   .proof-strip div {
     min-height: 118px;
   }
-
-  .pdp-page h1 {
-    font-size: clamp(2.85rem, 14vw, 4rem);
-    line-height: 0.86;
-  }
-
-  .pdp-gallery {
-    min-height: 500px;
-  }
-
-  .ego-tile {
-    min-height: 168px;
-  }
-
-  .ego-page h1 {
-    max-width: 100%;
-    font-size: clamp(2.85rem, 14vw, 4rem);
-    line-height: 0.86;
-  }
-
-  .ego-role {
-    font-size: 1.08rem;
-  }
-
-  .ego-stage .pack-shell {
-    min-width: 210px;
-    height: 480px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.001ms !important;
-    animation-iteration-count: 1 !important;
-    scroll-behavior: auto !important;
-    transition-duration: 0.001ms !important;
-  }
-}
