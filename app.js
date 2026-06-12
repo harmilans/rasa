@@ -249,8 +249,14 @@ function homeView() {
         <p class="eyebrow">Shop by state</p>
         <h2>Eight egos. Cart them like moods.</h2>
       </div>
-      <div class="product-grid">
-        ${egos.map(productCard).join("")}
+      <div class="slider-shell">
+        <div class="slider-controls" aria-label="Product slider controls">
+          <button data-slide="products" data-dir="-1" aria-label="Previous products">Prev</button>
+          <button data-slide="products" data-dir="1" aria-label="Next products">Next</button>
+        </div>
+        <div class="product-grid slider-track" data-slider="products">
+          ${egos.map(productCard).join("")}
+        </div>
       </div>
     </section>
 
@@ -296,6 +302,7 @@ function detailView(ego) {
       class="pdp-page ${ego.mood} ${ego.font}"
       style="--a:${ego.palette[0]};--b:${ego.palette[1]};--c:${ego.palette[2]};--d:${ego.palette[3]}"
     >
+      ${universeLayer(ego)}
       <div class="ego-background" aria-hidden="true">
         <span>${ego.name}</span>
         <span>${ego.meaning}</span>
@@ -348,16 +355,47 @@ function detailView(ego) {
           <p class="eyebrow">Mockup world</p>
           <h2>${ego.name} belongs to the full RASA drop.</h2>
           <p>
-            Every ego gets its own shelf energy, but the collection still feels
-            like one strange, shoppable snack universe.
+            Every ego gets its own shelf energy and its own bite architecture:
+            wrapper, texture, filling, dusting, and hero ingredient cues.
           </p>
         </div>
-        <img src="assets/rasa-ego-mockups.png" alt="RASA ego packaging mockup board">
+        <div class="mockup-stack">
+          <img src="assets/rasa-ego-mockups.png" alt="RASA ego packaging mockup board">
+          <img src="assets/rasa-inside-mockups.png" alt="RASA opened packs with snack pieces and ingredients">
+        </div>
       </section>
       <div class="related-row">
-        ${egos.filter((item) => item.id !== ego.id).slice(0, 3).map(productCard).join("")}
+        <div class="slider-controls" aria-label="Related product slider controls">
+          <button data-slide="related" data-dir="-1" aria-label="Previous related products">Prev</button>
+          <button data-slide="related" data-dir="1" aria-label="Next related products">Next</button>
+        </div>
+        <div class="related-track slider-track" data-slider="related">
+          ${egos.filter((item) => item.id !== ego.id).map(productCard).join("")}
+        </div>
       </div>
     </section>
+  `;
+}
+
+function universeLayer(ego) {
+  const symbols = {
+    rage: ["FIRE", "HEAT", "RAGE", "BITE", "BACK"],
+    glamour: ["GLOSS", "GOLD", "MAIN", "MIRROR", "STAR"],
+    quiet: ["FLOAT", "HUSH", "SOFT", "VANISH", "AIR"],
+    fear: ["DARE", "SOUR", "RUN", "GLITCH", "NIGHT"],
+    desire: ["WANT", "ROSE", "VELVET", "LOUD", "PULSE"],
+    hero: ["HERO", "STRIKE", "GO", "RISE", "WIN"],
+    play: ["POP", "HAHA", "CRACK", "BOOM", "ROOM"],
+    comfort: ["HOLD", "SOFT", "WARM", "RESET", "HOME"]
+  };
+
+  return `
+    <div class="universe-layer ${ego.mood}-universe" aria-hidden="true">
+      ${symbols[ego.mood].map((symbol, index) => `<span class="universe-token token-${index + 1}">${symbol}</span>`).join("")}
+      <i class="universe-shape shape-one"></i>
+      <i class="universe-shape shape-two"></i>
+      <i class="universe-shape shape-three"></i>
+    </div>
   `;
 }
 
@@ -430,9 +468,18 @@ document.addEventListener("click", (event) => {
   const remove = event.target.closest("[data-remove]");
   const open = event.target.closest("[data-cart-open]");
   const close = event.target.closest("[data-cart-close]");
+  const slide = event.target.closest("[data-slide]");
 
   if (add) addToCart(add.dataset.add);
   if (remove) removeFromCart(remove.dataset.remove);
+  if (slide) {
+    const track = document.querySelector(`[data-slider="${slide.dataset.slide}"]`);
+    if (track) {
+      const direction = Number(slide.dataset.dir || 1);
+      const distance = Math.max(track.clientWidth * 0.82, 260);
+      track.scrollBy({ left: direction * distance, behavior: "smooth" });
+    }
+  }
   if (open) {
     cartOpen = true;
     render();
