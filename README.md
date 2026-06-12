@@ -37,6 +37,7 @@ Because this is plain HTML/CSS/JS, it can be deployed directly on GitHub Pages, 
 ## D2C Features
 
 - Shoppable home page
+- Home-page packaging and inside-product mockup showcase
 - Swipeable product slider by ego/state
 - PDP-style ego pages
 - Ego-specific animated universes
