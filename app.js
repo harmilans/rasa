@@ -228,6 +228,7 @@ function homeView() {
         </div>
         <div class="hero-actions">
           <a class="primary-action" href="#shop">Shop the drop</a>
+          <a class="secondary-action" href="#mockups">View mockups</a>
           <button class="secondary-action" data-add="bundle">Add starter kit</button>
         </div>
       </div>
@@ -241,6 +242,23 @@ function homeView() {
         <div class="orbit-word orbit-two">BUY CALM</div>
         <div class="orbit-word orbit-three">EAT EGO</div>
         ${heroStack()}
+      </div>
+    </section>
+
+    <section id="mockups" class="home-mockups-section">
+      <div class="section-heading">
+        <p class="eyebrow">Built as a real drop</p>
+        <h2>Wrappers, opened bites, fillings, crumbs, ingredients.</h2>
+      </div>
+      <div class="home-mockup-grid">
+        <article>
+          <span>Packaging system</span>
+          <img src="assets/rasa-ego-mockups.png" alt="RASA ego packaging mockup board">
+        </article>
+        <article>
+          <span>What is inside</span>
+          <img src="assets/rasa-inside-mockups.png" alt="RASA opened packs with snacks and ingredients">
+        </article>
       </div>
     </section>
 
@@ -482,21 +500,3 @@ document.addEventListener("click", (event) => {
   }
   if (open) {
     cartOpen = true;
-    render();
-  }
-  if (close) {
-    cartOpen = false;
-    render();
-  }
-});
-
-document.addEventListener("submit", (event) => {
-  if (event.target.matches(".email-capture")) {
-    event.preventDefault();
-    event.target.classList.add("submitted");
-    event.target.innerHTML = "<strong>You're on the first drop list.</strong>";
-  }
-});
-
-window.addEventListener("hashchange", render);
-render();
