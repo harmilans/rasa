@@ -25,10 +25,8 @@ The site uses hash routes:
 - `#mada`
 - `#nirvana`
 - `#bhaya`
-- `#shringar`
-- `#veera`
+- `#kama`
 - `#hasya`
-- `#karuna`
 
 ## Deploy
 
@@ -41,6 +39,7 @@ Because this is plain HTML/CSS/JS, it can be deployed directly on GitHub Pages, 
 - Swipeable product slider by ego/state
 - PDP-style ego pages
 - Ego-specific animated universes
+- Click-to-open snack reveal animations with ingredient bursts
 - Swipeable related-product sliders
 - Starter kit bundle
 - Add-to-bag cart drawer
