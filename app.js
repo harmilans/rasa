@@ -36,18 +36,18 @@ const egos = [
   {
     id: "nirvana",
     name: "NIRVANA",
-    meaning: "Soft disappearance",
-    role: "For vanishing from the noise without leaving the room.",
-    product: "Vanilla Cardamom Blueberry",
+    meaning: "Sacred release",
+    role: "For cutting the noise and dropping into bright, absolute stillness.",
+    product: "Blueberry Cardamom Ice",
     price: 369,
     pack: "Box of 6 crisp wafers",
-    badge: "Night snack",
-    ingredients: ["cardamom", "chamomile", "blueberry", "l-theanine"],
-    benefits: ["Soft vanilla snap", "Low sugar", "5g fiber", "Made for wind-down"],
-    phrase: "Float mode. Signal muted.",
-    visual: "frosted glass, mist, icy silence",
-    palette: ["#dff9ff", "#0d1e35", "#88d9ff", "#ffffff"],
-    font: "font-serene",
+    badge: "Bold calm",
+    ingredients: ["blueberry", "cardamom", "chamomile", "l-theanine"],
+    benefits: ["Icy berry snap", "Low sugar", "5g fiber", "High-contrast calm"],
+    phrase: "Silence, but make it electric.",
+    visual: "electric blue, white void, chrome halo, bold stillness",
+    palette: ["#00a7ff", "#020817", "#ffffff", "#6dfffb"],
+    font: "font-brutal",
     mood: "quiet"
   },
   {
@@ -68,38 +68,21 @@ const egos = [
     mood: "fear"
   },
   {
-    id: "shringar",
-    name: "SHRINGAR",
-    meaning: "Edible desire",
-    role: "For wanting, being wanted, and pretending it was accidental.",
+    id: "kama",
+    name: "KAMA",
+    meaning: "Pure desire",
+    role: "For wanting without whispering about it.",
     product: "Rose Cocoa Berry",
     price: 399,
     pack: "Box of 6 chocolate wafers",
     badge: "After dark",
     ingredients: ["rose", "cocoa", "strawberry", "silver leaf"],
     benefits: ["Rose cocoa shell", "Low sugar", "5g fiber", "Date-night coded"],
-    phrase: "Desire with teeth.",
-    visual: "plum velvet, lipstick chrome, perfume danger",
-    palette: ["#561034", "#f03c73", "#c6c6d0", "#1a0612"],
+    phrase: "Want out loud.",
+    visual: "plum velvet, lipstick chrome, sacred desire",
+    palette: ["#5b003c", "#ff2f73", "#f6d3df", "#15000d"],
     font: "font-luxe",
     mood: "desire"
-  },
-  {
-    id: "veera",
-    name: "VEERA",
-    meaning: "Hero mode",
-    role: "For the pitch, the exam, the first rep, the last lap.",
-    product: "Masala Cacao Charge",
-    price: 369,
-    pack: "Box of 6 crisp wafers",
-    badge: "Focus pick",
-    ingredients: ["cacao", "brahmi", "sea salt", "saffron"],
-    benefits: ["Salted masala cacao", "Low sugar", "5g fiber", "Desk-to-gym energy"],
-    phrase: "Enter like a victory.",
-    visual: "cobalt, saffron, sharp steel geometry",
-    palette: ["#0647ff", "#ff8a00", "#e8edf6", "#07122e"],
-    font: "font-brutal",
-    mood: "hero"
   },
   {
     id: "hasya",
@@ -117,23 +100,6 @@ const egos = [
     palette: ["#ffe500", "#1da7ff", "#ff3b30", "#111111"],
     font: "font-pop",
     mood: "play"
-  },
-  {
-    id: "karuna",
-    name: "KARUNA",
-    meaning: "Soft armor",
-    role: "For the day that needs a gentler ending.",
-    product: "Coconut Jaggery Almond",
-    price: 349,
-    pack: "Box of 6 comfort wafers",
-    badge: "Soft reset",
-    ingredients: ["coconut", "jaggery", "almond", "shatavari"],
-    benefits: ["Coconut jaggery melt", "Low sugar", "5g fiber", "Comfort without crash"],
-    phrase: "Hold yourself properly.",
-    visual: "quilted lilac, cream, handwritten softness",
-    palette: ["#c9a7ff", "#fff0d8", "#ff7f6e", "#352047"],
-    font: "font-soft",
-    mood: "comfort"
   }
 ];
 
@@ -265,7 +231,7 @@ function homeView() {
     <section id="shop" class="shop-section">
       <div class="section-heading">
         <p class="eyebrow">Shop by state</p>
-        <h2>Eight egos. Cart them like moods.</h2>
+        <h2>Six egos. Cart them like moods.</h2>
       </div>
       <div class="slider-shell">
         <div class="slider-controls" aria-label="Product slider controls">
@@ -289,14 +255,14 @@ function homeView() {
         <button class="primary-action" data-add="bundle">Add starter kit · ₹1299</button>
       </div>
       <div class="bundle-packs">
-        ${[egos[0], egos[1], egos[2], egos[6]].map((ego) => packMarkup(ego, "bundle-pack")).join("")}
+        ${[egos[0], egos[1], egos[2], egos[5]].map((ego) => packMarkup(ego, "bundle-pack")).join("")}
       </div>
     </section>
 
     <section class="proof-strip">
       <div><strong>5g</strong><span>fiber per pack</span></div>
       <div><strong>&lt;4g</strong><span>added sugar</span></div>
-      <div><strong>8</strong><span>collectible egos</span></div>
+      <div><strong>6</strong><span>collectible egos</span></div>
       <div><strong>0</strong><span>boring beige wellness</span></div>
     </section>
 
@@ -363,6 +329,7 @@ function detailView(ego) {
         <div class="ingredient-list">
           ${ego.ingredients.map((item) => `<span>${item}</span>`).join("")}
         </div>
+        ${snackReveal(ego)}
         <div class="pdp-note">
           <strong>No heavy wellness lecture.</strong>
           <span>Just a crisp snack with a specific emotional costume.</span>
@@ -392,6 +359,37 @@ function detailView(ego) {
         </div>
       </div>
     </section>
+  `;
+}
+
+function snackReveal(ego) {
+  const particles = {
+    rage: ["chilli", "cacao", "salt", "spark", "heat", "ash"],
+    glamour: ["saffron", "guava", "gold", "citrus", "vanilla", "gloss"],
+    quiet: ["berry", "ice", "cardamom", "mist", "halo", "chamomile"],
+    fear: ["tamarind", "lime", "shock", "sour", "mango", "zap"],
+    desire: ["rose", "cocoa", "berry", "silver", "velvet", "petal"],
+    play: ["mango", "pop", "banana", "candy", "jaggery", "confetti"]
+  };
+
+  return `
+    <div class="snack-reveal ${ego.mood}" style="--a:${ego.palette[0]};--b:${ego.palette[1]};--c:${ego.palette[2]};--d:${ego.palette[3]}">
+      <div class="reveal-stage" aria-label="${ego.name} open pack animation">
+        <div class="reveal-pack">
+          <span class="reveal-brand">RASA</span>
+          <strong>${ego.name}</strong>
+          <small>${ego.product}</small>
+        </div>
+        <div class="tear tear-left"></div>
+        <div class="tear tear-right"></div>
+        <div class="wafer">
+          <i></i><i></i><i></i>
+        </div>
+        ${particles[ego.mood].map((item, index) => `<span class="ingredient-pop pop-${index + 1}">${item}</span>`).join("")}
+        <div class="reveal-dust"></div>
+      </div>
+      <button class="reveal-trigger" data-reveal>Open the ego</button>
+    </div>
   `;
 }
 
@@ -487,6 +485,7 @@ document.addEventListener("click", (event) => {
   const open = event.target.closest("[data-cart-open]");
   const close = event.target.closest("[data-cart-close]");
   const slide = event.target.closest("[data-slide]");
+  const reveal = event.target.closest("[data-reveal]");
 
   if (add) addToCart(add.dataset.add);
   if (remove) removeFromCart(remove.dataset.remove);
@@ -498,5 +497,32 @@ document.addEventListener("click", (event) => {
       track.scrollBy({ left: direction * distance, behavior: "smooth" });
     }
   }
+  if (reveal) {
+    const panel = reveal.closest(".snack-reveal");
+    if (panel) {
+      panel.classList.remove("open");
+      void panel.offsetWidth;
+      panel.classList.add("open");
+      reveal.textContent = "Replay the burst";
+    }
+  }
   if (open) {
     cartOpen = true;
+    render();
+  }
+  if (close) {
+    cartOpen = false;
+    render();
+  }
+});
+
+document.addEventListener("submit", (event) => {
+  if (event.target.matches(".email-capture")) {
+    event.preventDefault();
+    event.target.classList.add("submitted");
+    event.target.innerHTML = "<strong>You're on the first drop list.</strong>";
+  }
+});
+
+window.addEventListener("hashchange", render);
+render();
